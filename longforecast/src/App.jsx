@@ -148,6 +148,12 @@ function App() {
           <p className="wind">💨 Ветер: {weather.current.wind_speed_10m} км/ч</p>
         </div>
       )}
+
+        <footer className="footer">
+          <p>© {new Date().getFullYear()} LongForecast</p>
+            <p className="footer-sub">Данные: Open-Meteo</p>
+        </footer>
+
     </div>
   )
 }

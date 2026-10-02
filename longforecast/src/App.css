@@ -145,3 +145,21 @@ h1 {
 .status.error {
   color: #dc2626;
 }
+
+
+.footer {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid #cbd5e1;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.footer p {
+  margin: 4px 0;
+}
+
+.footer-sub {
+  font-size: 12px;
+  color: #cbd5e1;
+}
