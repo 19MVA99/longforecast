@@ -14,9 +14,26 @@ function getWeatherDescription(code) {
   return { text: 'Гроза', emoji: '⛈️' }
 }
 
+// Форматирует дату в строку вида "14:35:07" в нужном часовом поясе
+function formatTime(date, timezone) {
+  try {
+    return new Intl.DateTimeFormat('ru-RU', {
+      timeZone: timezone,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    }).format(date)
+  } catch {
+    // Если часовой пояс некорректный — вернём локальное время
+    return date.toLocaleTimeString('ru-RU')
+  }
+}
+
 function App() {
+  // Что введено в поле прямо сейчас (меняется на каждую букву)
   const [city, setCity] = useState('Минск')
-  // query теперь — объект: { type: 'city', value: 'Минск' } или { type: 'coords', lat, lon }
+  // Какой город искать (меняется только по кнопке/Enter)
+  // type: 'city' — искать через геокодинг, 'coords' — сразу по координатам
   const [query, setQuery] = useState({ type: 'city', value: 'Минск' })
 
   const [weather, setWeather] = useState(null)
@@ -24,6 +41,10 @@ function App() {
   const [error, setError] = useState(null)
   const [geoLoading, setGeoLoading] = useState(false)
 
+  // Текущее время для отображения (обновляется раз в секунду)
+  const [now, setNow] = useState(new Date())
+
+  // Загружаем погоду при загрузке и при каждом изменении query
   useEffect(() => {
     async function loadWeather() {
       setLoading(true)
@@ -74,6 +95,16 @@ function App() {
 
     loadWeather()
   }, [query])
+
+  // Обновляем время каждую секунду
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setNow(new Date())
+    }, 1000)
+
+    // Убираем таймер, когда компонент "умирает" — иначе утечка памяти
+    return () => clearInterval(timer)
+  }, [])
 
   // Поиск по названию города
   function handleSubmit(e) {
@@ -142,6 +173,8 @@ function App() {
             {weather.countryName && `, ${weather.countryName}`}
           </p>
 
+          <p className="time">🕐 {formatTime(now, weather.timezone)}</p>
+
           <div className="emoji">{description.emoji}</div>
           <p className="temp">{weather.current.temperature_2m}°C</p>
           <p className="desc">{description.text}</p>
@@ -149,11 +182,10 @@ function App() {
         </div>
       )}
 
-        <footer className="footer">
-          <p>© {new Date().getFullYear()} LongForecast</p>
-            <p className="footer-sub">Данные: Open-Meteo</p>
-        </footer>
-
+      <footer className="footer">
+        <p>© {new Date().getFullYear()} LongForecast</p>
+        <p className="footer-sub">Данные: Open-Meteo</p>
+      </footer>
     </div>
   )
 }
