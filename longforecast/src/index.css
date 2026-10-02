@@ -1,5 +1,9 @@
 /* Глобальные стили. Всё оформление — в App.css */
 
+html {
+  color-scheme: light;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -10,9 +14,14 @@ body {
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   color: #1e293b;
+  min-height: 100vh;
   background:
-    radial-gradient(ellipse at top, #dbeafe 0%, transparent 60%),
-    linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
+  radial-gradient(circle at 20% 20%, rgba(148, 163, 184, 0.3), transparent 55%),
+  radial-gradient(circle at 80% 30%, rgba(203, 213, 225, 0.4), transparent 55%),
+  radial-gradient(circle at 50% 90%, rgba(148, 163, 184, 0.25), transparent 60%),
+  linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+background-attachment: fixed;
+background-size: cover;
   background-attachment: fixed;
   background-size: cover;
 }
