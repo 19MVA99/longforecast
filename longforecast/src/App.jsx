@@ -142,7 +142,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>LongForecast</h1>
+      <h1>LF⛅</h1>
 
       <form className="search" onSubmit={handleSubmit}>
         <input
